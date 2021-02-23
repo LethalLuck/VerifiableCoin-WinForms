@@ -96,9 +96,9 @@ namespace CryptoVC_Form
             this.countdownTimerLbl.AutoSize = true;
             this.countdownTimerLbl.Location = new System.Drawing.Point(655, 388);
             this.countdownTimerLbl.Name = "countdownTimerLbl";
-            this.countdownTimerLbl.Size = new System.Drawing.Size(109, 13);
+            this.countdownTimerLbl.Size = new System.Drawing.Size(124, 13);
             this.countdownTimerLbl.TabIndex = 4;
-            this.countdownTimerLbl.Text = "Countdown: 00:00:00";
+            this.countdownTimerLbl.Text = "Countdown: 00:00:00:00";
             // 
             // btcRadio
             // 
@@ -148,7 +148,7 @@ namespace CryptoVC_Form
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(330, 249);
+            this.textBox1.Size = new System.Drawing.Size(330, 226);
             this.textBox1.TabIndex = 9;
             // 
             // groupBox2
@@ -218,18 +218,19 @@ namespace CryptoVC_Form
             // coinLbl
             // 
             this.coinLbl.AutoSize = true;
-            this.coinLbl.Location = new System.Drawing.Point(455, 264);
+            this.coinLbl.ForeColor = System.Drawing.Color.Black;
+            this.coinLbl.Location = new System.Drawing.Point(455, 244);
             this.coinLbl.Name = "coinLbl";
-            this.coinLbl.Size = new System.Drawing.Size(100, 13);
+            this.coinLbl.Size = new System.Drawing.Size(76, 13);
             this.coinLbl.TabIndex = 13;
-            this.coinLbl.Text = "Selected Coin: XXX";
+            this.coinLbl.Text = "Selected: XXX";
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(577, 267);
+            this.textBox2.Location = new System.Drawing.Point(458, 263);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(211, 118);
+            this.textBox2.Size = new System.Drawing.Size(330, 122);
             this.textBox2.TabIndex = 14;
             // 
             // verifyBtn
@@ -273,13 +274,14 @@ namespace CryptoVC_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.rollLbl);
             this.Controls.Add(this.coinCountLbl);
+            this.Controls.Add(this.coinLbl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.verifyBtn);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.coinLbl);
             this.Controls.Add(this.ethPriceLbl);
             this.Controls.Add(this.btcPriceLbl);
             this.Controls.Add(this.groupBox2);
