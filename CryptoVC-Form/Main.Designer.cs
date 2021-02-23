@@ -88,7 +88,7 @@ namespace CryptoVC_Form
             // 
             // countdownTimer
             // 
-            this.countdownTimer.Interval = 250;
+            this.countdownTimer.Interval = 200;
             this.countdownTimer.Tick += new System.EventHandler(this.countdownTimer_Tick);
             // 
             // countdownTimerLbl
@@ -150,7 +150,6 @@ namespace CryptoVC_Form
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(330, 249);
             this.textBox1.TabIndex = 9;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // groupBox2
             // 

@@ -12,6 +12,7 @@ namespace CryptoVC_Form
     class Collection
     {
         List<Tuple<string, double>> cryptos = new List<Tuple<string, double>>();
+        public List<string> rollCryptos = new List<string>();
         //Regex regex = new Regex("class=\"crypto-symbol\">([a-zA-Z0-9]*)</span></a></td><td><span>\\$<!-- -->([0-9]*.[0-9]*)</span>");
         Regex regex = new Regex("\"symbol\":\"([a-zA-Z0-9]*)\",\"price\":\"([0-9]*.[0-9]*)\"");
         public double btcPrice = 0;
@@ -64,6 +65,31 @@ namespace CryptoVC_Form
             return cryptos;
         }
 
+        public List<Tuple<string, double>> CoinbaseMarket(string type)
+        {
+            string result = String.Empty;
+            WebRequest request = WebRequest.Create("https://api.binance.com/api/v3/ticker/price");
+            WebResponse response = request.GetResponse();
+
+            using (var reader = new StreamReader(response.GetResponseStream()))
+            {
+                result = reader.ReadToEnd();
+            }
+
+            foreach (Match match in regex.Matches(result))
+            {
+                if (match.Groups[1].Value.Contains(type))
+                    cryptos.Add(new Tuple<string, double>(match.Groups[1].Value, double.Parse(match.Groups[2].Value)));
+
+                if (match.Groups[1].Value.Contains("BTCUSDC"))
+                    btcPrice = double.Parse(match.Groups[2].Value);
+                if (match.Groups[1].Value.Contains("ETHUSDC"))
+                    ethPrice = double.Parse(match.Groups[2].Value);
+            }
+
+            return cryptos;
+        }
+
         public string SelectCoin()
         {
             Regex hash = new Regex("\"hash\": \"([a-zA-Z0-9]*)\"");
@@ -79,8 +105,8 @@ namespace CryptoVC_Form
             rSeed = Int32.Parse(seed.Match(result).Groups[1].Value);
             rHash = hash.Match(result).Groups[1].Value;
             Random random = new Random(rSeed);
-            roll = random.Next(0, cryptos.Count - 1);
-            return cryptos[roll].Item1;
+            roll = random.Next(0, rollCryptos.Count - 1);
+            return rollCryptos[roll];
         }
     }
 }
