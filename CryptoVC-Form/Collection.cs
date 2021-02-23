@@ -18,6 +18,7 @@ namespace CryptoVC_Form
         public double ethPrice = 0;
         public int rSeed = 0;
         public string rHash = String.Empty;
+        public int roll = 0;
 
         public List<Tuple<string, double>> GenerateCoins(string type)
         {
@@ -78,8 +79,8 @@ namespace CryptoVC_Form
             rSeed = Int32.Parse(seed.Match(result).Groups[1].Value);
             rHash = hash.Match(result).Groups[1].Value;
             Random random = new Random(rSeed);
-
-            return cryptos[random.Next(0, cryptos.Count-1)].Item1;
+            roll = random.Next(0, cryptos.Count - 1);
+            return cryptos[roll].Item1;
         }
     }
 }
