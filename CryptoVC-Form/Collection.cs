@@ -23,6 +23,7 @@ namespace CryptoVC_Form
         public double ethPrice = 0;
         public int rSeed = 0;
         public string rHash = String.Empty;
+        public string rTime = String.Empty;
         public int roll = 0;
 
         public List<Tuple<string, double>> GenerateCoins(string type)
@@ -96,6 +97,7 @@ namespace CryptoVC_Form
                         newList.Add(cap.Item1);
                     }
             }
+            newList.Sort();
             //foreach(var basic in rollCryptos)
             //{
             //    foreach(var advanced in marketCap)
@@ -118,6 +120,7 @@ namespace CryptoVC_Form
         {
             Regex hash = new Regex("\"hash\": \"([a-zA-Z0-9]*)\"");
             Regex seed = new Regex("\"total\": ([0-9]*),");
+            Regex time = new Regex("\"received\": \"([0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z)\"");
             string result = String.Empty;
             WebRequest request = WebRequest.Create("https://api.blockcypher.com/v1/btc/main/txs");
             WebResponse response = request.GetResponse();
@@ -131,6 +134,7 @@ namespace CryptoVC_Form
 
             rSeed = Int32.Parse(seed.Match(result).Groups[1].Value);
             rHash = hash.Match(result).Groups[1].Value;
+            rTime = time.Match(result).Groups[1].Value;
             Random random = new Random(rSeed);
             roll = random.Next(0, newList.Count - 1);
             return newList[roll];

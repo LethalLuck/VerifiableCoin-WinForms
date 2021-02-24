@@ -14,6 +14,7 @@ namespace CryptoVC_Form
     public partial class VCPumps : Form
     {
         Collection cryptos = new Collection();
+        Hash hash = new Hash();
 
         public DateTime time = new DateTime();
         TimeSpan waitTime = new TimeSpan();
@@ -24,6 +25,8 @@ namespace CryptoVC_Form
         public double btcPrice = 0;
         public double ethPrice = 0;
         public double marketCapPrice = 0;
+        int type = 0;
+        int price = 2;
 
         public VCPumps()
         {
@@ -50,12 +53,24 @@ namespace CryptoVC_Form
                 marketCapPrice = double.Parse(marketCapTxt.Text);
             }
             catch { }
+
             //BackgroundWorker worker = new BackgroundWorker();
             if (time > DateTime.Now)
             {
                 waitTime = time - DateTime.Now;
             }
+            if (btcRadio.Checked)
+                type = 0;
+            if (ethRadio.Checked)
+                type = 1;
+            if (tenPlusRadio.Checked)
+                price = 0;
+            if (underTenRadio.Checked)
+                price = 1;
+            if (underOneRadio.Checked)
+                price = 2;
 
+            textBox4.Text = hash.EncodeBase64(time, type, price, marketCapPrice);
             //worker.DoWork += Worker_DoWork;
             //worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             //worker.ProgressChanged += Worker_ProgressChanged;
@@ -146,10 +161,11 @@ namespace CryptoVC_Form
                 //newList = cryptos.rollCryptos;
                 textBox1.Clear();
                 cryptos.CoinbaseMarket(marketCapPrice);
+                int i = 0;
                 foreach (var v in cryptos.newList)
-                    textBox1.Text += v + Environment.NewLine;
+                    textBox1.Text +=String.Format("({0}): {1}" + Environment.NewLine, i++, v);
                 coinLbl.Text = String.Format("Selected: {0}", cryptos.SelectCoin());
-                textBox2.Text = String.Format("Seed used: {0}\r\nTXID: {1} ", cryptos.rSeed, cryptos.rHash);
+                textBox2.Text = String.Format("Seed used: {0}\r\nTXID: {1}\r\nRecieved Time: {2} ", cryptos.rSeed, cryptos.rHash, cryptos.rTime);
                 rollLbl.Text = "Rolled: " + cryptos.roll;
                 coinCountLbl.Text = cryptos.newList.Count.ToString();
             }
@@ -169,6 +185,49 @@ namespace CryptoVC_Form
                 if(v.Item1 != "ETH" && v.Item1 != "BTC")
                     if(newList.Contains(string.Concat(v.Item1, "BTC")) || newList.Contains(string.Concat(v.Item1, "ETH")))
                         textBox3.Text += v.Item1 + " | " + v.Item2 + Environment.NewLine;//textBox3.Text += v + Environment.NewLine;
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            base64Btn.Enabled = true;
+        }
+
+        private void base64Btn_Click(object sender, EventArgs e)
+        {
+            int current = 0;
+            string settings = hash.DecodeBase64(textBox4.Text);
+            foreach(string setting in settings.Split('|'))
+            {
+                switch (current)
+                {
+                    case 0:
+                        time = DateTime.FromFileTimeUtc(long.Parse(setting));
+                        dateTimeCalander.SetDate(time);
+                        dateTimeCalander.SetSelectionRange(time, time);
+                        dateTimePicker.Value = time;
+                        break;
+                    case 1:
+                        if (int.Parse(setting) == 0)
+                            btcRadio.Checked = true;
+                        else if (int.Parse(setting) == 1)
+                            ethRadio.Checked = true;
+                        break;
+                    case 2:
+                        if (int.Parse(setting) == 0)
+                            tenPlusRadio.Checked = true;
+                        else if (int.Parse(setting) == 1)
+                            underTenRadio.Checked = true;
+                        else if (int.Parse(setting) == 2)
+                            underOneRadio.Checked = true;
+                        break;
+                    case 3:
+                        marketCapPrice = double.Parse(setting);
+                        marketCapTxt.Text = marketCapPrice.ToString();
+                        break;
+                }
+
+                current++;
+            }
         }
     }
 }
