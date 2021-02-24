@@ -36,12 +36,11 @@ namespace CryptoVC_Form
             this.txIDLbl = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.rollLbl = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.coinAmountTxt = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // verifyBtn
@@ -82,9 +81,9 @@ namespace CryptoVC_Form
             this.txIDLbl.AutoSize = true;
             this.txIDLbl.Location = new System.Drawing.Point(3, 41);
             this.txIDLbl.Name = "txIDLbl";
-            this.txIDLbl.Size = new System.Drawing.Size(33, 13);
+            this.txIDLbl.Size = new System.Drawing.Size(25, 13);
             this.txIDLbl.TabIndex = 4;
-            this.txIDLbl.Text = "TxID:";
+            this.txIDLbl.Text = "Api:";
             // 
             // textBox1
             // 
@@ -99,27 +98,9 @@ namespace CryptoVC_Form
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 67);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.Size = new System.Drawing.Size(68, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Transaction Info:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 198);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "hash = TxID";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 211);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "total = Seed";
+            this.label1.Text = "Beacon Info:";
             // 
             // label4
             // 
@@ -155,17 +136,27 @@ namespace CryptoVC_Form
             this.coinAmountTxt.Size = new System.Drawing.Size(78, 20);
             this.coinAmountTxt.TabIndex = 12;
             // 
+            // textBox2
+            // 
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(4, 113);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(86, 108);
+            this.textBox2.TabIndex = 13;
+            this.textBox2.Text = "The seed is \"generated\" by grabbing the last 7 DIGITS in the \"localRandomValue\" s" +
+    "tring";
+            // 
             // Verify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(358, 262);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.coinAmountTxt);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.rollLbl);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txIDLbl);
@@ -189,11 +180,10 @@ namespace CryptoVC_Form
         private System.Windows.Forms.Label txIDLbl;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label rollLbl;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox coinAmountTxt;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }

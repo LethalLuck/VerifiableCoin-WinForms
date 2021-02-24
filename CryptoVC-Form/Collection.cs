@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CryptoVC_Form
@@ -21,8 +22,10 @@ namespace CryptoVC_Form
         Regex regex = new Regex("\"symbol\":\"([a-zA-Z0-9]*)\",\"price\":\"([0-9]*.[0-9]*)\"");
         public double btcPrice = 0;
         public double ethPrice = 0;
-        public int rSeed = 0;
-        public string rHash = String.Empty;
+        public string rValue = String.Empty;
+        public string rSeed = "";
+        public string url = "";
+        //public string rHash = String.Empty;
         public string rTime = String.Empty;
         public int roll = 0;
 
@@ -98,6 +101,7 @@ namespace CryptoVC_Form
                     }
             }
             newList.Sort();
+            newList = newList.Distinct().ToList();
             //foreach(var basic in rollCryptos)
             //{
             //    foreach(var advanced in marketCap)
@@ -116,13 +120,18 @@ namespace CryptoVC_Form
             //}
         }
 
-        public string SelectCoin()
+        public string SelectCoin(DateTime time)
         {
-            Regex hash = new Regex("\"hash\": \"([a-zA-Z0-9]*)\"");
-            Regex seed = new Regex("\"total\": ([0-9]*),");
-            Regex time = new Regex("\"received\": \"([0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z)\"");
+            long unixTime = ((DateTimeOffset)time).ToUnixTimeSeconds();
+
+            Regex randomVal = new Regex("\"localRandomValue\" : \"([a-zA-Z0-9]*)\"");
+            //Regex hash = new Regex("\"hash\": \"([a-zA-Z0-9]*)\"");
+            //Regex seed = new Regex("\"total\": ([0-9]*),");
+            Regex timestamp = new Regex("\"timeStamp\" : \"([0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z)\"");
             string result = String.Empty;
-            WebRequest request = WebRequest.Create("https://api.blockcypher.com/v1/btc/main/txs");
+            url = String.Format("https://beacon.nist.gov/beacon/2.0/pulse/time/{0}000", unixTime);
+            Thread.Sleep(5000);
+            WebRequest request = WebRequest.Create(url);
             WebResponse response = request.GetResponse();
 
             using (var reader = new StreamReader(response.GetResponseStream()))
@@ -131,11 +140,12 @@ namespace CryptoVC_Form
             }
 
             //CoinbaseMarket(cMarketCapPrice);
-
-            rSeed = Int32.Parse(seed.Match(result).Groups[1].Value);
-            rHash = hash.Match(result).Groups[1].Value;
-            rTime = time.Match(result).Groups[1].Value;
-            Random random = new Random(rSeed);
+            rValue = randomVal.Match(result).Groups[1].Value;
+            rSeed = rValue.Replace("A", "").Replace("B", "").Replace("C", "").Replace("D", "").Replace("E", "").Replace("F", "");
+            rSeed = rSeed.Substring(rSeed.Count() - 7);
+            //rHash = hash.Match(result).Groups[1].Value;
+            rTime = timestamp.Match(result).Groups[1].Value;
+            Random random = new Random(int.Parse(rSeed));
             roll = random.Next(0, newList.Count - 1);
             return newList[roll];
         }

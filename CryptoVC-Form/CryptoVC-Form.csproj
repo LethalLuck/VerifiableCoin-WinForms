@@ -62,6 +62,7 @@
     <Compile Include="Verify.Designer.cs">
       <DependentUpon>Verify.cs</DependentUpon>
     </Compile>
+    <Compile Include="Webhook.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

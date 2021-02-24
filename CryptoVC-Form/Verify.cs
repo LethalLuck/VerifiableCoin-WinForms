@@ -28,7 +28,7 @@ namespace CryptoVC_Form
                 Random random = new Random(Int32.Parse(seedTxt.Text));
                 rollLbl.Text = random.Next(0, int.Parse(coinAmountTxt.Text) - 1).ToString();
 
-                WebRequest request = WebRequest.Create("https://api.blockcypher.com/v1/btc/main/txs/" + txIDTxt.Text);
+                WebRequest request = WebRequest.Create(txIDTxt.Text);
                 WebResponse response = request.GetResponse();
 
                 using (var reader = new StreamReader(response.GetResponseStream()))
