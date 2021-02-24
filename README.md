@@ -3,6 +3,7 @@ Foundation for a soon to be random coin selector for crypto pump groups.Will be 
 
 This needs an immense amount of work to be completely viable.
 Once ported to WPF this will most likely be improved.
+Next push will integrate https://beacon.nist.gov/beacon/2.0/pulse/time/ instead of a blockchain
 
 Soon to be added:
   ```Base64 setting export and import
