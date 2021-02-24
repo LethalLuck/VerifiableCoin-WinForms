@@ -52,6 +52,10 @@ namespace CryptoVC_Form
             this.label1 = new System.Windows.Forms.Label();
             this.coinCountLbl = new System.Windows.Forms.Label();
             this.rollLbl = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.marketCapTxt = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -114,6 +118,7 @@ namespace CryptoVC_Form
             // 
             // base64Btn
             // 
+            this.base64Btn.Enabled = false;
             this.base64Btn.Location = new System.Drawing.Point(577, 417);
             this.base64Btn.Name = "base64Btn";
             this.base64Btn.Size = new System.Drawing.Size(75, 23);
@@ -270,12 +275,53 @@ namespace CryptoVC_Form
             this.rollLbl.TabIndex = 18;
             this.rollLbl.Text = "Rolled: 0";
             // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(12, 48);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(440, 190);
+            this.textBox3.TabIndex = 19;
+            this.textBox3.Visible = false;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(290, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 20;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // marketCapTxt
+            // 
+            this.marketCapTxt.Location = new System.Drawing.Point(335, 418);
+            this.marketCapTxt.Name = "marketCapTxt";
+            this.marketCapTxt.Size = new System.Drawing.Size(100, 20);
+            this.marketCapTxt.TabIndex = 21;
+            this.marketCapTxt.Text = "50000000";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(245, 421);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Max Marketcap:";
+            // 
             // VCPumps
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.marketCapTxt);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.rollLbl);
             this.Controls.Add(this.coinCountLbl);
             this.Controls.Add(this.coinLbl);
@@ -327,6 +373,10 @@ namespace CryptoVC_Form
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label coinCountLbl;
         private System.Windows.Forms.Label rollLbl;
+        private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox marketCapTxt;
+        private System.Windows.Forms.Label label2;
     }
 }
 

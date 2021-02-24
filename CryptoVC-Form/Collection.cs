@@ -13,6 +13,10 @@ namespace CryptoVC_Form
     {
         List<Tuple<string, double>> cryptos = new List<Tuple<string, double>>();
         public List<string> rollCryptos = new List<string>();
+        public List<Tuple<string, double>> marketCap = new List<Tuple<string, double>>();
+        public List<string> newList = new List<string>();
+        double cMarketCapPrice = 0;
+
         //Regex regex = new Regex("class=\"crypto-symbol\">([a-zA-Z0-9]*)</span></a></td><td><span>\\$<!-- -->([0-9]*.[0-9]*)</span>");
         Regex regex = new Regex("\"symbol\":\"([a-zA-Z0-9]*)\",\"price\":\"([0-9]*.[0-9]*)\"");
         public double btcPrice = 0;
@@ -65,10 +69,13 @@ namespace CryptoVC_Form
             return cryptos;
         }
 
-        public List<Tuple<string, double>> CoinbaseMarket(string type)
+        public void CoinbaseMarket(double marketCapPrice)
         {
+            cMarketCapPrice = marketCapPrice;
+            Regex symbolCap = new Regex("\"symbol\":\"([a-zA-Z0-9]*).*?\"marketCap\":([0-9]*.[0-9]*?),");
+
             string result = String.Empty;
-            WebRequest request = WebRequest.Create("https://api.binance.com/api/v3/ticker/price");
+            WebRequest request = WebRequest.Create("https://api.coinmarketcap.com/data-api/v3/cryptocurrency/listing?start=1&limit=1000&convert=USD");
             WebResponse response = request.GetResponse();
 
             using (var reader = new StreamReader(response.GetResponseStream()))
@@ -76,18 +83,35 @@ namespace CryptoVC_Form
                 result = reader.ReadToEnd();
             }
 
-            foreach (Match match in regex.Matches(result))
+            foreach (Match match in symbolCap.Matches(result))
             {
-                if (match.Groups[1].Value.Contains(type))
-                    cryptos.Add(new Tuple<string, double>(match.Groups[1].Value, double.Parse(match.Groups[2].Value)));
-
-                if (match.Groups[1].Value.Contains("BTCUSDC"))
-                    btcPrice = double.Parse(match.Groups[2].Value);
-                if (match.Groups[1].Value.Contains("ETHUSDC"))
-                    ethPrice = double.Parse(match.Groups[2].Value);
+                marketCap.Add(new Tuple<string, double>(match.Groups[1].Value.ToString(), double.Parse(match.Groups[2].Value)));
             }
 
-            return cryptos;
+            foreach (var cap in marketCap)
+            {
+                if(cap.Item2 < cMarketCapPrice)
+                    if(rollCryptos.Contains(cap.Item1 + "BTC") || rollCryptos.Contains(cap.Item1 + "ETH"))
+                    {
+                        newList.Add(cap.Item1);
+                    }
+            }
+            //foreach(var basic in rollCryptos)
+            //{
+            //    foreach(var advanced in marketCap)
+            //    {
+            //        if(advanced.Item1 != "BTC" && advanced.Item1 != "ETH")
+            //        {
+            //            if(basic == advanced.Item1 + "BTC")
+            //            {
+            //                if(advanced.Item2 < 200000000)
+            //                {
+            //                    marketCap.Remove(advanced);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         public string SelectCoin()
@@ -102,11 +126,14 @@ namespace CryptoVC_Form
             {
                 result = reader.ReadToEnd();
             }
+
+            //CoinbaseMarket(cMarketCapPrice);
+
             rSeed = Int32.Parse(seed.Match(result).Groups[1].Value);
             rHash = hash.Match(result).Groups[1].Value;
             Random random = new Random(rSeed);
-            roll = random.Next(0, rollCryptos.Count - 1);
-            return rollCryptos[roll];
+            roll = random.Next(0, newList.Count - 1);
+            return newList[roll];
         }
     }
 }
