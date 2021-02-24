@@ -299,6 +299,7 @@ namespace CryptoVC_Form
             // webbhookChk
             // 
             this.webbhookChk.AutoSize = true;
+            this.webbhookChk.Enabled = false;
             this.webbhookChk.Location = new System.Drawing.Point(10, 49);
             this.webbhookChk.Name = "webbhookChk";
             this.webbhookChk.Size = new System.Drawing.Size(73, 17);
@@ -319,6 +320,7 @@ namespace CryptoVC_Form
             // 
             // webhookTxt
             // 
+            this.webhookTxt.Enabled = false;
             this.webhookTxt.Location = new System.Drawing.Point(89, 47);
             this.webhookTxt.Name = "webhookTxt";
             this.webhookTxt.Size = new System.Drawing.Size(266, 20);
