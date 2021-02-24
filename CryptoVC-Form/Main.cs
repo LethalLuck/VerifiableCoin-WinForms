@@ -49,7 +49,11 @@ namespace CryptoVC_Form
 
         private void beginBtn_Click(object sender, EventArgs e)
         {
-            time = dateTimePicker.Value.ToUniversalTime();
+            time = dateTimePicker.Value.AddMilliseconds(-dateTimePicker.Value.Millisecond).AddSeconds(-dateTimePicker.Value.Second);
+            dateTimePicker.Value = time;
+            dateTimeCalander.SetDate(time);
+            dateTimeCalander.SetSelectionRange(time, time);
+            verifyBtn.Enabled = true;
             try
             {
                 marketCapPrice = double.Parse(marketCapTxt.Text);
@@ -57,9 +61,9 @@ namespace CryptoVC_Form
             catch { }
 
             //BackgroundWorker worker = new BackgroundWorker();
-            if (time > DateTime.Now.ToUniversalTime())
+            if (time.ToUniversalTime() > DateTime.Now.ToUniversalTime())
             {
-                waitTime = time - DateTime.Now.ToUniversalTime();
+                waitTime = time.ToUniversalTime() - DateTime.Now.ToUniversalTime();
             }
             if (btcRadio.Checked)
                 type = 0;
@@ -102,7 +106,7 @@ namespace CryptoVC_Form
             Collection cryptos = new Collection();
 
             countdownTimerLbl.Text = "Countdown: " + waitTime.ToString(@"dd\:hh\:mm\:ss");//\.ff");
-            waitTime = time - DateTime.Now.ToUniversalTime(); //Currently has a 200ms delay which means if another transaction goes through in that time there could be different coins chosen.
+            waitTime = time.ToUniversalTime() - DateTime.Now.ToUniversalTime(); //Currently has a 200ms delay which means if another transaction goes through in that time there could be different coins chosen.
 
             if (waitTime.TotalSeconds <= 0)
             {
@@ -169,6 +173,8 @@ namespace CryptoVC_Form
                     textBox1.Text +=String.Format("({0}): {1}" + Environment.NewLine, i++, v);
 
                 long unixTime = ((DateTimeOffset)time).ToUnixTimeSeconds();
+                unixTime -= unixTime % 10;
+                webhookTxt.Text = String.Format("Long: {0}0000", unixTime);
                 coinLbl.Text = String.Format("Selected: {0}", cryptos.SelectCoin(time.ToUniversalTime()));
                 textBox2.Text = String.Format("Random value: {0}\r\nSeed extracted: {1}\r\nUsing NIST: {2}\r\nTimeStamp: {3}", cryptos.rValue, cryptos.rSeed, cryptos.url, cryptos.rTime);// unixTime);
                 //textBox2.Text = String.Format("Seed used: {0}\r\nTXID: {1}\r\nRecieved Time: {2} ", cryptos.rSeed, cryptos.rHash, cryptos.rTime);
@@ -179,7 +185,7 @@ namespace CryptoVC_Form
 
         private void verifyBtn_Click(object sender, EventArgs e)
         {
-            Verify verify = new Verify();
+            Verify verify = new Verify(time);
             verify.Show();
         }
 
@@ -190,6 +196,7 @@ namespace CryptoVC_Form
 
         private void base64Btn_Click(object sender, EventArgs e)
         {
+            verifyBtn.Enabled = true;
             int current = 0;
             string settings = hash.DecodeBase64(textBox4.Text);
             foreach(string setting in settings.Split('|'))
@@ -228,8 +235,10 @@ namespace CryptoVC_Form
 
         private void webbhookChk_CheckedChanged(object sender, EventArgs e)
         {
-            webhookTxt.Visible = !webbhookChk.Visible;
-            sendWebhook = !sendWebhook;
+            if (webbhookChk.Checked == true)
+                sendWebhook = true;
+            else
+                sendWebhook = false;
         }
     }
 }

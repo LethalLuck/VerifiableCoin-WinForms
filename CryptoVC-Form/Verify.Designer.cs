@@ -41,6 +41,8 @@ namespace CryptoVC_Form
             this.label5 = new System.Windows.Forms.Label();
             this.coinAmountTxt = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.seedLblMatch = new System.Windows.Forms.Label();
+            this.tsLblMatch = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // verifyBtn
@@ -62,9 +64,9 @@ namespace CryptoVC_Form
             // 
             // seedTxt
             // 
-            this.seedTxt.Location = new System.Drawing.Point(44, 12);
+            this.seedTxt.Location = new System.Drawing.Point(65, 12);
             this.seedTxt.Name = "seedTxt";
-            this.seedTxt.Size = new System.Drawing.Size(137, 20);
+            this.seedTxt.Size = new System.Drawing.Size(116, 20);
             this.seedTxt.TabIndex = 2;
             // 
             // seedLbl
@@ -72,9 +74,9 @@ namespace CryptoVC_Form
             this.seedLbl.AutoSize = true;
             this.seedLbl.Location = new System.Drawing.Point(3, 15);
             this.seedLbl.Name = "seedLbl";
-            this.seedLbl.Size = new System.Drawing.Size(35, 13);
+            this.seedLbl.Size = new System.Drawing.Size(56, 13);
             this.seedLbl.TabIndex = 3;
-            this.seedLbl.Text = "Seed:";
+            this.seedLbl.Text = "DateTime:";
             // 
             // txIDLbl
             // 
@@ -90,7 +92,8 @@ namespace CryptoVC_Form
             this.textBox1.Location = new System.Drawing.Point(96, 64);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(253, 186);
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(253, 157);
             this.textBox1.TabIndex = 5;
             // 
             // label1
@@ -147,11 +150,31 @@ namespace CryptoVC_Form
             this.textBox2.Text = "The seed is \"generated\" by grabbing the last 7 DIGITS in the \"localRandomValue\" s" +
     "tring";
             // 
+            // seedLblMatch
+            // 
+            this.seedLblMatch.AutoSize = true;
+            this.seedLblMatch.Location = new System.Drawing.Point(93, 224);
+            this.seedLblMatch.Name = "seedLblMatch";
+            this.seedLblMatch.Size = new System.Drawing.Size(80, 13);
+            this.seedLblMatch.TabIndex = 14;
+            this.seedLblMatch.Text = "Seed: 0000000";
+            // 
+            // tsLblMatch
+            // 
+            this.tsLblMatch.AutoSize = true;
+            this.tsLblMatch.Location = new System.Drawing.Point(93, 240);
+            this.tsLblMatch.Name = "tsLblMatch";
+            this.tsLblMatch.Size = new System.Drawing.Size(195, 13);
+            this.tsLblMatch.TabIndex = 15;
+            this.tsLblMatch.Text = "Timestamp: 0000-00-00T00:00:00.000Z";
+            // 
             // Verify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(358, 262);
+            this.Controls.Add(this.tsLblMatch);
+            this.Controls.Add(this.seedLblMatch);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.coinAmountTxt);
             this.Controls.Add(this.label5);
@@ -185,5 +208,7 @@ namespace CryptoVC_Form
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox coinAmountTxt;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label seedLblMatch;
+        private System.Windows.Forms.Label tsLblMatch;
     }
 }

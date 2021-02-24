@@ -64,7 +64,7 @@ namespace CryptoVC_Form
             // 
             // dateTimePicker
             // 
-            this.dateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm:ss tt";
+            this.dateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm tt";
             this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker.Location = new System.Drawing.Point(12, 418);
             this.dateTimePicker.Name = "dateTimePicker";
@@ -237,11 +237,13 @@ namespace CryptoVC_Form
             this.textBox2.Location = new System.Drawing.Point(458, 263);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox2.Size = new System.Drawing.Size(330, 122);
             this.textBox2.TabIndex = 14;
             // 
             // verifyBtn
             // 
+            this.verifyBtn.Enabled = false;
             this.verifyBtn.Location = new System.Drawing.Point(577, 391);
             this.verifyBtn.Name = "verifyBtn";
             this.verifyBtn.Size = new System.Drawing.Size(75, 23);
@@ -321,7 +323,6 @@ namespace CryptoVC_Form
             this.webhookTxt.Name = "webhookTxt";
             this.webhookTxt.Size = new System.Drawing.Size(266, 20);
             this.webhookTxt.TabIndex = 26;
-            this.webhookTxt.Visible = false;
             // 
             // VCPumps
             // 
